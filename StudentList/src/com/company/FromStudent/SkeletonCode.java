@@ -2,15 +2,24 @@ package com.company.FromStudent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SkeletonCode {
-
     private File csvDatabase;
     private Scanner filescanner;
+    private StudentList arrStudents;
+    private ArrayList<Event> arrEvents;
 
     public boolean openFile(File file) throws FileNotFoundException {
-        return true;
+        csvDatabase = file;
+        boolean isReal = csvDatabase.exists();
+
+        //This is going to need beefing. It should read in the file and create a bunch of students and events
+        arrStudents = new StudentList();
+
+
+        return isReal;
     }
 
     public Student searchStudentByName(String studentName) {
@@ -35,7 +44,9 @@ public class SkeletonCode {
 
     public StudentList readFile(){
         // it would read from this.csvDatabase and return a new StudentList with the data
-        return new StudentList();
+
+
+        return arrStudents;
     }
 
     public boolean createFile(String name){

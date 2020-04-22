@@ -31,4 +31,5 @@ public class StudentList {
     public Student getStudentAttendedMostEvents() {
         return this.studentAttendedMostEvents;
     }
+
 }
