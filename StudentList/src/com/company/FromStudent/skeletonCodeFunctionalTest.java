@@ -1,5 +1,6 @@
 package com.company.FromStudent;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public class skeletonCodeFunctionalTest {
     @Test
     public void openFile() throws FileNotFoundException {
 
-        File f = new File("Events.csv");
+        File f = new File("repo/Events.csv");
         boolean result =  sc.openFile(f);
 
         assertTrue(result); // the method should return true as the file was opened successfully
@@ -39,6 +40,8 @@ public class skeletonCodeFunctionalTest {
         assertEquals(expected.getLastName(), result.getLastName());
         assertEquals(expected.getID(), result.getID());
         assertEquals(expected.getEmail(), result.getEmail());
+
+        //There is no indication on what to do when a student has the same name.
     }
 
     @Test
@@ -97,6 +100,7 @@ public class skeletonCodeFunctionalTest {
     public void readFile() {
 
         // Assume the file has the following information (shown as a StudentList):
+        //DJM - I had to adjust the test here to allow addStudent to accept an index.
 
         StudentList expected = new StudentList();
         expected.addStudent(new Student("John", "Wayne", "000000000", "johnwayne@students.kennesaw.edu"));

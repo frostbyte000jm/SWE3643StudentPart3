@@ -12,6 +12,7 @@ import java.util.Scanner;
 
 public class Main {
     private static SkeletonCode skeletonCode;
+    private static String fileLoc = "repo/Events.csv";
 
     public static void main(String[] args) throws IOException {
 
@@ -40,6 +41,7 @@ public class Main {
                     case 2:
                         break;
                     case 3:
+                        ChoiceDisplayStudents();
                         break;
                     case 4:
                         doLoop = false;
@@ -73,7 +75,7 @@ public class Main {
 
     private static void ChoiceLoadFile() throws FileNotFoundException {
 
-        File f = new File("repo/Events.csv");
+        File f = new File(fileLoc);
         boolean isGoodFile = skeletonCode.openFile(f);
 
         if (isGoodFile){
@@ -87,6 +89,6 @@ public class Main {
 
     private static void ChoiceDisplayStudents(){
         StudentList sl = skeletonCode.readFile();
-        Student s = sl.
+        //Student s = sl.
     }
 }

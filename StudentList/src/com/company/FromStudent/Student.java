@@ -4,6 +4,7 @@ public class Student {
 
     private String firstName;
     private String lastName;
+    private String fullName;
     private String ID;
     private String email;
 
@@ -12,6 +13,7 @@ public class Student {
     public Student(String fn, String ln, String id, String email){
         this.firstName = fn;
         this.lastName = ln;
+        this.fullName = firstName + " " + lastName;
         this.ID = id;
         this.email = email;
     }
@@ -30,6 +32,10 @@ public class Student {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     public String getID() {

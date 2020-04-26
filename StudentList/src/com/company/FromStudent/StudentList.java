@@ -7,13 +7,15 @@ public class StudentList {
 
     private Map<Student, Integer> studentList; // Students are mapped to the times they have been found in the file
     private Student studentAttendedMostEvents;
+    private int index;
 
     public StudentList(){
         this.studentList = new HashMap<Student, Integer>();
+        index = 0;
     }
 
     public void addStudent(Student s) {
-        this.studentList.putIfAbsent(s, 1);
+        this.studentList.putIfAbsent(s, index++);
     }
 
     public Map<Student, Integer> getStudentList(){
@@ -31,5 +33,7 @@ public class StudentList {
     public Student getStudentAttendedMostEvents() {
         return this.studentAttendedMostEvents;
     }
+
+
 
 }
