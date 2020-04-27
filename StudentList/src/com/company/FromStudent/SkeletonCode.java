@@ -87,10 +87,11 @@ public class SkeletonCode {
 
     public Student searchStudentByName(String studentName) {
 
-        
+        if(mapStudents.containsStudent(studentName)){
+            return mapStudents.getStudentByFullName(studentName);
+        }
 
-        //Student st = arrStudents[1]
-        return new Student();
+        return null;
     }
 
     public Student searchStudentByID(String studentID){

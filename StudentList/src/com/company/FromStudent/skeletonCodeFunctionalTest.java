@@ -29,7 +29,9 @@ public class skeletonCodeFunctionalTest {
     }
 
     @Test
-    public void searchStudentByName(){
+    public void searchStudentByName() throws FileNotFoundException {
+        File f = new File("repo/Events.csv");
+        sc.openFile(f);
 
         Student expected = new Student("John", "Wayne", "000000000", "johnwayne@students.kennesaw.edu");
 

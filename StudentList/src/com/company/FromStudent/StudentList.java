@@ -18,6 +18,30 @@ public class StudentList {
         this.studentList.putIfAbsent(s, index++);
     }
 
+    public boolean containsStudent(String fn){
+        Student foundStudent = null;
+        for (Student ob: studentList.keySet()) {
+            if (ob.getFullName().equals(fn)){
+                foundStudent = ob;
+                break;
+            }
+        }
+
+        return foundStudent != null;
+    }
+
+    public Student getStudentByFullName(String fn){
+        Student foundStudent = null;
+        for (Student ob: studentList.keySet()) {
+            if (ob.getFullName().equals(fn)){
+                foundStudent = ob;
+                break;
+            }
+        }
+
+        return foundStudent;
+    }
+
     public Map<Student, Integer> getStudentList(){
         return this.studentList;
     }

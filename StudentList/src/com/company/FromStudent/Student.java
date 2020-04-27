@@ -53,4 +53,19 @@ public class Student {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public int hashCode()
+    {
+        return ID.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if(o instanceof Student)
+            return this.ID.equals(((Student) o).getID());
+        else
+            return false;
+    }
 }
