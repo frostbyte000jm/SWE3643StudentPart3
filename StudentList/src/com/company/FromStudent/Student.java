@@ -1,5 +1,7 @@
 package com.company.FromStudent;
 
+import java.util.ArrayList;
+
 public class Student {
 
     private String firstName;
@@ -7,6 +9,8 @@ public class Student {
     private String fullName;
     private String ID;
     private String email;
+    private ArrayList<Event> arrEvents;
+    private int eventCount;
 
     public Student(){}
 
@@ -16,6 +20,7 @@ public class Student {
         this.fullName = firstName + " " + lastName;
         this.ID = id;
         this.email = email;
+        arrEvents = new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -52,6 +57,22 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void addEvent(Event event){
+        if(!arrEvents.contains(event)){
+            arrEvents.add(event);
+            eventCount++;
+        }
+
+    }
+
+    public int getEventCount(){return eventCount;}
+
+    public void DisplayStudent(){
+        System.out.println("Student Name: "+firstName+" "+lastName+"\n" +
+                "Student ID: "+ID+"\n" +
+                "Student Email: "+ email);
     }
 
     @Override

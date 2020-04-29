@@ -1,4 +1,4 @@
-lblFName,lblLastName,lblIDNum,lblEmail
+lblFName,lblLastName,lblIDNum,lblEmail,lblEventName,lblEventDate
 Dude,Man,321321321,Dude.Man@students.Kennesaw.edu
 First1,Last1,999000001,First1.Last1@students.kennesaw.edu
 First2,Last2,999000002,First2.Last2@students.kennesaw.edu
@@ -11,7 +11,7 @@ First8,Last8,999000008,First8.Last8@students.kennesaw.edu
 First9,Last9,999000009,First9.Last9@students.kennesaw.edu
 First10,Last10,999000010,First10.Last10@students.kennesaw.edu
 First11,Last11,999000011,First11.Last11@students.kennesaw.edu
-John,Wayne,000000000,JohnWayne@students.kennesaw.edu
-John,Wayne,000000004,JohnWayne4@students.kennesaw.edu
-Papa,John,000000001,PapaJohn@students.kennesaw.edu
+John,Wayne,000000000,johnwayne@students.kennesaw.edu,Hackathon,01/02/2020
+John,Wayne,000000004,johnwayne4@students.kennesaw.edu
+Papa,John,000000001,papajohn@students.kennesaw.edu
 Donald,Trump,000000002,djt@students.kennesaw.edu

@@ -1,8 +1,10 @@
 package com.company.FromStudent;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.Date;
 import java.util.Scanner;
 
 public class SkeletonCode {
@@ -18,6 +20,7 @@ public class SkeletonCode {
         String[] arrHeaders = null;
         boolean isFileGood = csvDatabase.exists();
         mapStudents = new StudentList();
+        arrEvents = new ArrayList<>();
 
         /*
         This is a handy tool I made a few years ago when a csv file changes constantly.
@@ -32,8 +35,11 @@ public class SkeletonCode {
                 String buildLastName = "";
                 String buildIDNum = "";
                 String buildEmail = "";
+                String eventName = "";
+                String eventDate = "";
                 String line = "";
                 String csvSplit = ",";
+                Boolean doEvent = false;
 
                 while ((line = bufferedReader.readLine())!=null){
 
@@ -47,6 +53,10 @@ public class SkeletonCode {
 
                         //sort
                         for (int i = 0; i < arrHeaders.length; i++){
+                            if(arrColumns.length<=i){
+                                break;
+                            }
+                            doEvent = false;
                             String type = arrHeaders[i];
                             String data = arrColumns[i];
 
@@ -68,10 +78,32 @@ public class SkeletonCode {
                                     buildEmail = data;
                                     isFileGood = true;
                                     break;
+                                case "lblEventName":
+                                    doEvent = true;
+                                    eventName = data;
+                                    isFileGood = true;
+                                    break;
+                                case "lblEventDate":
+                                    doEvent = true;
+                                    eventDate = data;
+                                    break;
+
                             }
                         }
+                        //Create Event
+                        if(doEvent){
+                            Event event = new Event(eventName,eventDate);
+                            if(!arrEvents.contains(event)){
+                                arrEvents.add(event);
+                            }
+                        }
+
                         //Create Student, then add student
                         Student s = new Student(buildFirstName,buildLastName,buildIDNum,buildEmail);
+                        if(doEvent){
+                            Event event = new Event(eventName,eventDate);
+                            s.addEvent(event);
+                        }
                         mapStudents.addStudent(s);
                     }
                 }
@@ -82,12 +114,14 @@ public class SkeletonCode {
             }
         }
 
+
+
         return isFileGood;
     }
 
     public Student searchStudentByName(String studentName) {
 
-        if(mapStudents.containsStudent(studentName)){
+        if(mapStudents.containsStudentFullName(studentName)){
             return mapStudents.getStudentByFullName(studentName);
         }
 
@@ -95,19 +129,38 @@ public class SkeletonCode {
     }
 
     public Student searchStudentByID(String studentID){
-        return new Student();
+        if(mapStudents.containsStudentIDNum(studentID)){
+            return mapStudents.getStudentByIDNum(studentID);
+        }
+
+        return null;
     }
 
     public Student searchStudentByEmail(String studentEmail){
-        return new Student();
+        if(mapStudents.containsStudentEmail(studentEmail)){
+            return mapStudents.getStudentByEmail(studentEmail);
+        }
+
+        return null;
     }
 
     public Event searchEventByName(String eventName){
-        return new Event();
+
+        for (int i = 0; i < arrEvents.size(); i++){
+            if(arrEvents.get(i).getName().equals(eventName)){
+                return arrEvents.get(i);
+            }
+        }
+        return null;
     }
 
     public Event searchEventByDate(String eventDate){
-        return new Event();
+        for (int i = 0; i < arrEvents.size(); i++){
+            if(arrEvents.get(i).getDate().equals(eventDate)){
+                return arrEvents.get(i);
+            }
+        }
+        return null;
     }
 
     public StudentList readFile(){
@@ -117,8 +170,10 @@ public class SkeletonCode {
         return mapStudents;
     }
 
-    public boolean createFile(String name){
-        return false;
+    public boolean createFile(String name) throws IOException {
+        File file = new File("C:/Temp/"+name);
+        file.createNewFile();
+        return file.exists();
     }
 
     public boolean writeToFile(StudentList sl){

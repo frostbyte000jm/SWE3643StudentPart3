@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import com.company.FromStudent.*;
 
 import static org.junit.Assert.*;
@@ -13,26 +15,23 @@ import static org.junit.Assert.*;
 public class skeletonCodeFunctionalTest {
 
     private SkeletonCode sc;
+    private File file;
+    private boolean fileOpenGood;
 
     @Before
     public void setUp() throws Exception {
         this.sc = new SkeletonCode();
+        file = new File("repo/Events.csv");
+        fileOpenGood =  sc.openFile(file);
     }
 
     @Test
-    public void openFile() throws FileNotFoundException {
-
-        File f = new File("repo/Events.csv");
-        boolean result =  sc.openFile(f);
-
-        assertTrue(result); // the method should return true as the file was opened successfully
+    public void openFile() {
+        assertTrue(fileOpenGood); // the method should return true as the file was opened successfully
     }
 
     @Test
-    public void searchStudentByName() throws FileNotFoundException {
-        File f = new File("repo/Events.csv");
-        sc.openFile(f);
-
+    public void searchStudentByName() {
         Student expected = new Student("John", "Wayne", "000000000", "johnwayne@students.kennesaw.edu");
 
         Student result = sc.searchStudentByName("John Wayne");
@@ -118,7 +117,7 @@ public class skeletonCodeFunctionalTest {
     }
 
     @Test
-    public void createFile() {
+    public void createFile() throws IOException { //Unfortunately you never told me where to create the file.
 
         boolean expected = true;
 

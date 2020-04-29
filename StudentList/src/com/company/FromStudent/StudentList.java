@@ -18,8 +18,8 @@ public class StudentList {
         this.studentList.putIfAbsent(s, index++);
     }
 
-    public boolean containsStudent(String fn){
-        Student foundStudent = null;
+    public boolean containsStudentFullName(String fn){
+       Student foundStudent = null;
         for (Student ob: studentList.keySet()) {
             if (ob.getFullName().equals(fn)){
                 foundStudent = ob;
@@ -34,6 +34,54 @@ public class StudentList {
         Student foundStudent = null;
         for (Student ob: studentList.keySet()) {
             if (ob.getFullName().equals(fn)){
+                foundStudent = ob;
+                break;
+            }
+        }
+
+        return foundStudent;
+    }
+
+    public boolean containsStudentIDNum(String IDNum){
+        Student foundStudent = null;
+        for (Student ob: studentList.keySet()) {
+            if (ob.getID().equals(IDNum)){
+                foundStudent = ob;
+                break;
+            }
+        }
+
+        return foundStudent != null;
+    }
+
+    public Student getStudentByIDNum(String IDNum){
+        Student foundStudent = null;
+        for (Student ob: studentList.keySet()) {
+            if (ob.getID().equals(IDNum)){
+                foundStudent = ob;
+                break;
+            }
+        }
+
+        return foundStudent;
+    }
+
+    public boolean containsStudentEmail(String email){
+        Student foundStudent = null;
+        for (Student ob: studentList.keySet()) {
+            if (ob.getEmail().equals(email)){
+                foundStudent = ob;
+                break;
+            }
+        }
+
+        return foundStudent != null;
+    }
+
+    public Student getStudentByEmail(String email){
+        Student foundStudent = null;
+        for (Student ob: studentList.keySet()) {
+            if (ob.getEmail().equals(email)){
                 foundStudent = ob;
                 break;
             }
