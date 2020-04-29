@@ -43,6 +43,7 @@ public class Main {
                     case 2:
                         break;
                     case 3:
+                        ChoiceCreateNewFile();
                         break;
                     case 4:
                         SearchStudents();
@@ -73,6 +74,38 @@ public class Main {
 
         System.out.println(test);
         System.in.read();
+
+
+    }
+
+    private static void ChoiceCreateNewFile() throws IOException {
+
+
+
+        System.out.println("Enter New File Name (Ex 'bob.csv': ");
+        String fileName = scanner.next();
+        fileName = "C:\\Temp\\"+ fileName;
+        System.out.println("You're file will be saved to "+fileName + " Continue? (Y/N)");
+        boolean doContinue = scanner.next().equals("Y");
+        boolean isAllGood = false;
+
+        if(doContinue){
+            boolean doOverride = false;
+            File csvDatabase = new File(fileName);
+            //Check if exist to not accidentally overwrite
+            if(csvDatabase.exists()){
+                System.out.println("File already Exist, Overwrite? (Y/N)");
+                Scanner scanner = new Scanner(System.in);
+                doOverride = scanner.next().equals("Y");
+            }
+
+            isAllGood = skeletonCode.createFile(fileName,doOverride);
+        }
+
+        if(isAllGood)
+            System.out.println(fileName+" has been created.");
+        else
+            System.out.println(fileName + " has NOT been created.");
 
 
     }

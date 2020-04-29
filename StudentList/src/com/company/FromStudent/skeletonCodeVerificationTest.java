@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import static org.junit.Assert.*;
@@ -453,7 +454,7 @@ public class skeletonCodeVerificationTest {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Test
-    public void writeToFile() {
+    public void writeToFile() throws IOException {
 
         StudentList ls = null;
         boolean result = sc.writeToFile(ls); // should return false as StudentList is null
@@ -462,7 +463,7 @@ public class skeletonCodeVerificationTest {
     }
 
     @Test
-    public void writeToFile2() {
+    public void writeToFile2() throws IOException {
 
         StudentList infoOnFile1 = sc.readFile(); // returns info on the file to compare later
 

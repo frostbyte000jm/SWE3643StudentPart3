@@ -75,6 +75,12 @@ public class Student {
                 "Student Email: "+ email);
     }
 
+    public String getCSVStudent(){
+        String eventName = (arrEvents.size()>0)?arrEvents.get(0).getName():"";
+        String eventDate = (arrEvents.size()>0)?arrEvents.get(0).getDate():"";
+        return firstName+","+lastName+","+ID+","+email+","+eventName+","+eventDate+"\n";
+    }
+
     @Override
     public int hashCode()
     {

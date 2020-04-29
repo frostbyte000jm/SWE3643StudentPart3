@@ -1,20 +1,19 @@
 package com.company.FromStudent;
 
 import java.io.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class SkeletonCode {
+    private String filePath;
     private File csvDatabase;
     private Scanner filescanner;
     private StudentList mapStudents;
     private ArrayList<Event> arrEvents;
 
-    public boolean openFile(File file) throws FileNotFoundException {
+    public boolean openFile(File file) {
         //declarations
+        filePath = file.getPath();
         csvDatabase = file;
         boolean doStartStream = true;
         String[] arrHeaders = null;
@@ -39,7 +38,7 @@ public class SkeletonCode {
                 String eventDate = "";
                 String line = "";
                 String csvSplit = ",";
-                Boolean doEvent = false;
+                boolean doEvent = false;
 
                 while ((line = bufferedReader.readLine())!=null){
 
@@ -170,15 +169,46 @@ public class SkeletonCode {
         return mapStudents;
     }
 
-    public boolean createFile(String name) throws IOException {
-        File file = new File("C:/Temp/"+name);
-        file.createNewFile();
-        return file.exists();
+    public boolean createFile(String name, boolean doOverride) throws IOException {
+        //declarations
+        filePath = "C:/Temp/"+name;
+        csvDatabase = new File("C:/Temp/"+name);
+        boolean doFileCreated = false;
+
+        if(doOverride)
+            csvDatabase.delete();
+
+        doFileCreated = csvDatabase.createNewFile();
+
+        return doFileCreated;
     }
 
-    public boolean writeToFile(StudentList sl){
+    public boolean writeToFile(StudentList sl) throws IOException {
+        csvDatabase.delete();
+        csvDatabase.createNewFile();
+        mapStudents = sl;
+
+        String csvHeaders = "lblFName,lblLastName,lblIDNum,lblEmail,lblEventName,lblEventDate";
+
+        FileWriter fileWriter = new FileWriter(csvDatabase);
+
+        //create Headers
+        fileWriter.append(csvHeaders);
+        fileWriter.append("\n");
+
+        ArrayList<String> csvList = new ArrayList<>();
+        csvList = mapStudents.writeToCSV();
+
+        for (String als: csvList) {
+            fileWriter.append(als);
+        }
+
+        fileWriter.close();
+
+
+
         //write to this.csvDatabase
-        return false;
+        return csvDatabase.exists();
     }
 
 

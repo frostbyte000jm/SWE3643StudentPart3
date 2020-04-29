@@ -1,5 +1,6 @@
 package com.company.FromStudent;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -88,6 +89,15 @@ public class StudentList {
         }
 
         return foundStudent;
+    }
+
+    public ArrayList<String> writeToCSV(){
+        ArrayList<String> csvList = new ArrayList<>();
+        for (Student ob: studentList.keySet()) {
+            String s = ob.getCSVStudent();
+            csvList.add(s);
+            }
+        return csvList;
     }
 
     public Map<Student, Integer> getStudentList(){

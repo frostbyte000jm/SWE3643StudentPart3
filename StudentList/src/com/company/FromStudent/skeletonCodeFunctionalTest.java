@@ -1,14 +1,12 @@
 package com.company.FromStudent;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import com.company.FromStudent.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
 
@@ -18,20 +16,35 @@ public class skeletonCodeFunctionalTest {
     private File file;
     private boolean fileOpenGood;
 
-    @Before
-    public void setUp() throws Exception {
+    public void createSkeletonCode(){
         this.sc = new SkeletonCode();
-        file = new File("repo/Events.csv");
+    }
+
+    public void basicSetUp(String fn) throws Exception {
+        createSkeletonCode();
+        //Cleanup
+        if(new File("C:\\Temp\\"+fn).exists())
+            new File("C:\\Temp\\"+fn).delete();
+
+        //Move test file from repo to Temp
+        Path source = Paths.get("repo/"+fn);
+        Path dest = Paths.get("C:\\Temp\\"+fn);
+        Files.copy(source, dest);
+
+        //Set Test file
+        file = new File("C:\\Temp\\"+fn);
         fileOpenGood =  sc.openFile(file);
     }
 
     @Test
-    public void openFile() {
+    public void openFile() throws Exception {
+        basicSetUp("Events.csv");
         assertTrue(fileOpenGood); // the method should return true as the file was opened successfully
     }
 
     @Test
-    public void searchStudentByName() {
+    public void searchStudentByName() throws Exception {
+        basicSetUp("Events.csv");
         Student expected = new Student("John", "Wayne", "000000000", "johnwayne@students.kennesaw.edu");
 
         Student result = sc.searchStudentByName("John Wayne");
@@ -46,8 +59,8 @@ public class skeletonCodeFunctionalTest {
     }
 
     @Test
-    public void searchStudentByID() {
-
+    public void searchStudentByID() throws Exception {
+        basicSetUp("Events.csv");
         Student expected = new Student("John", "Wayne", "000000000", "johnwayne@students.kennesaw.edu");
 
         Student result = sc.searchStudentByID("000000000");
@@ -60,8 +73,8 @@ public class skeletonCodeFunctionalTest {
     }
 
     @Test
-    public void searchStudentByEmail() {
-
+    public void searchStudentByEmail() throws Exception {
+        basicSetUp("Events.csv");
         Student expected = new Student("John", "Wayne", "000000000", "johnwayne@students.kennesaw.edu");
 
         Student result = sc.searchStudentByEmail("johnwayne@students.kennesaw.edu");
@@ -74,8 +87,8 @@ public class skeletonCodeFunctionalTest {
     }
 
     @Test
-    public void searchEventByName() {
-
+    public void searchEventByName() throws Exception {
+        basicSetUp("Events.csv");
         Event expected = new Event("Hackathon", "01/02/2020");
 
         Event result = sc.searchEventByName("Hackathon");
@@ -86,8 +99,8 @@ public class skeletonCodeFunctionalTest {
     }
 
     @Test
-    public void searchEventByDate() {
-
+    public void searchEventByDate() throws Exception {
+        basicSetUp("Events.csv");
         Event expected = new Event("Hackathon", "01/02/2020");
 
         Event result = sc.searchEventByDate("01/02/2020");
@@ -98,10 +111,9 @@ public class skeletonCodeFunctionalTest {
     }
 
     @Test
-    public void readFile() {
-
+    public void readFile() throws Exception {
+        basicSetUp("EventsSimple.csv");
         // Assume the file has the following information (shown as a StudentList):
-        //DJM - I had to adjust the test here to allow addStudent to accept an index.
 
         StudentList expected = new StudentList();
         expected.addStudent(new Student("John", "Wayne", "000000000", "johnwayne@students.kennesaw.edu"));
@@ -118,17 +130,20 @@ public class skeletonCodeFunctionalTest {
 
     @Test
     public void createFile() throws IOException { //Unfortunately you never told me where to create the file.
+        createSkeletonCode();
 
         boolean expected = true;
 
-        boolean result = sc.createFile("newFile.pdf");
+        boolean result = sc.createFile("newFile.pdf",true); // had to revise or test will fail on second running.
 
         // asserts a new file to write information to was created successfully
         assertEquals(expected, result);
     }
 
     @Test
-    public void writeToFile() {
+    public void writeToFile() throws IOException {
+        createSkeletonCode();
+        sc.createFile("writeTest.csv",true);
 
         StudentList sl = new StudentList();
         sl.addStudent(new Student("Sample", "Student", "000000000", "samplestudent@students.kennesaw.edu"));
