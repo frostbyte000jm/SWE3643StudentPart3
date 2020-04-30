@@ -5,7 +5,11 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 import static org.junit.Assert.*;
@@ -13,11 +17,41 @@ import static org.junit.Assert.*;
 public class skeletonCodeVerificationTest {
 
     private SkeletonCode sc;
-    private Scanner fileScanner;
+    private File file;
+    private boolean fileOpenGood;
+
+    //DJM sorry. I had to change some stuff up here
+    public void createSkeletonCode(){
+        this.sc = new SkeletonCode();
+    }
+
+    public void basicSetUp(String fn) throws Exception {
+        //createSkeletonCode();
+        //Cleanup
+        if(new File("C:\\Temp\\"+fn).exists())
+            new File("C:\\Temp\\"+fn).delete();
+
+        //Move test file from repo to Temp
+        Path source = Paths.get("repo/"+fn);
+        Path dest = Paths.get("C:\\Temp\\"+fn);
+        if(Files.exists(source)){
+            Files.copy(source, dest);
+        }
+        else{
+            sc.createFile(fn,true);
+        }
+
+
+        //Set Test file
+        file = new File("C:\\Temp\\"+fn);
+        fileOpenGood =  sc.openFile(file);
+    }
+
 
     @Before
     public void setUp() throws Exception {
-       this.sc = new SkeletonCode();
+       createSkeletonCode();
+        //this.sc = new SkeletonCode();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +98,7 @@ public class skeletonCodeVerificationTest {
     }
 
     @Test
-    public void searchStudentByName2() {
+    public void searchStudentByName2() throws Exception {
 
         String studentName = "Ch@#$rles"; // student name to pass
         Student expected = null; // the method should return null as it could not find the student
@@ -76,7 +110,7 @@ public class skeletonCodeVerificationTest {
     }
 
     @Test
-    public void searchStudentByName3() {
+    public void searchStudentByName3() throws Exception {
 
         String studentName = "Idon'texist Murphy"; // student name to pass
         Student expected = null; // the method should return null as it could not find the student
@@ -102,7 +136,7 @@ public class skeletonCodeVerificationTest {
     }
 
     @Test
-    public void searchStudentByID2() {
+    public void searchStudentByID2() throws Exception {
 
         String studentID = "0000123456"; // student ID to pass (too long in this case. Should be 9 numbers)
         Student expected = null; // the method should return null as it could not find the student
@@ -114,7 +148,7 @@ public class skeletonCodeVerificationTest {
     }
 
     @Test
-    public void searchStudentByID3() {
+    public void searchStudentByID3() throws Exception {
 
         String studentID = "0116"; // student ID to pass (too short in this case. Should be 9 numbers)
         Student expected = null; // the method should return null as it could not find the student
@@ -126,7 +160,7 @@ public class skeletonCodeVerificationTest {
     }
 
     @Test
-    public void searchStudentByID4() {
+    public void searchStudentByID4() throws Exception {
 
         String studentID = "999888888"; // student ID to pass (Invalid format. Should begin with "000")
         Student expected = null; // the method should return null as it could not find the student
@@ -138,7 +172,7 @@ public class skeletonCodeVerificationTest {
     }
 
     @Test
-    public void searchStudentByID5() {
+    public void searchStudentByID5() throws Exception {
 
         String studentID = "000987185"; // student ID to pass (valid format but ID does not exist)
         Student expected = null; // the method should return null as it could not find the student
@@ -152,7 +186,7 @@ public class skeletonCodeVerificationTest {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Test
-    public void searchStudentByEmail() {
+    public void searchStudentByEmail() throws Exception {
 
         String studentEmail = null; // student name to pass
         Student expected = null; // the method should return null as it could not find the student
@@ -164,7 +198,8 @@ public class skeletonCodeVerificationTest {
     }
 
     @Test
-    public void searchStudentByEmail2() {
+    public void searchStudentByEmail2() throws Exception {
+        //basicSetUp("Events.csv");
 
         String studentEmail = "nicholasmurphy@professors.kennesaw.edu"; // student email to pass (invalid format)
         Student expected = null; // the method should return null as it could not find the student
@@ -366,7 +401,7 @@ public class skeletonCodeVerificationTest {
     }
 
     @Test
-    public void searchEventByDate5() {
+    public void searchEventByDate5() { //This is a bad test. a date was never set DJM
 
         // Here we would need an event to be in the file in order to test that a slightly different but still valid
         // date format returns the correct result
@@ -396,7 +431,7 @@ public class skeletonCodeVerificationTest {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Test
-    public void readFile() {
+    public void readFile() { //This will never be null.
 
         //In order to test this, the database file in the skeleton class should be null, as this would
         // cause a NullPointerException. This tests that even if there is no file available to read, the
@@ -463,8 +498,8 @@ public class skeletonCodeVerificationTest {
     }
 
     @Test
-    public void writeToFile2() throws IOException {
-
+    public void writeToFile2() throws Exception {
+        basicSetUp("test.csv");
         StudentList infoOnFile1 = sc.readFile(); // returns info on the file to compare later
 
         StudentList sl = new StudentList();

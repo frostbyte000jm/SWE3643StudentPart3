@@ -11,21 +11,32 @@ public class SkeletonCode {
     private StudentList mapStudents;
     private ArrayList<Event> arrEvents;
 
-    public boolean openFile(File file) {
-        //declarations
-        filePath = file.getPath();
-        csvDatabase = file;
-        boolean doStartStream = true;
-        String[] arrHeaders = null;
-        boolean isFileGood = csvDatabase.exists();
+    public SkeletonCode(){
         mapStudents = new StudentList();
         arrEvents = new ArrayList<>();
+    }
 
-        /*
-        This is a handy tool I made a few years ago when a csv file changes constantly.
-        When building this, a CSV file was not given. To continue, I need to request the author give thier CSV file Headers
-         */
+    public boolean openFile(File file) {
+        //crap out
+        csvDatabase = file;
+        boolean isFileGood = false;
+        try{
+            isFileGood = csvDatabase.exists();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         if (isFileGood) {
+            //declarations
+            filePath = file.getPath();
+            boolean doStartStream = true;
+            String[] arrHeaders = null;
+            mapStudents = new StudentList();//to Reset mapStudents
+
+            /*
+            This is a handy tool I made a few years ago when a csv file changes constantly.
+            When building this, a CSV file was not given. To continue, I need to request the author give their CSV file Headers
+             */
             isFileGood = false; //reset to false, if CSV doesn't write anything. it is clearly not a good file.
             try (BufferedReader bufferedReader = new BufferedReader(new FileReader(csvDatabase.getPath()))) {
 
@@ -119,44 +130,50 @@ public class SkeletonCode {
     }
 
     public Student searchStudentByName(String studentName) {
-
-        if(mapStudents.containsStudentFullName(studentName)){
-            return mapStudents.getStudentByFullName(studentName);
+        //crapout
+        if(studentName != null && !studentName.isEmpty()){
+            if(mapStudents.containsStudentFullName(studentName)){
+                return mapStudents.getStudentByFullName(studentName);
+            }
         }
-
         return null;
     }
 
     public Student searchStudentByID(String studentID){
-        if(mapStudents.containsStudentIDNum(studentID)){
-            return mapStudents.getStudentByIDNum(studentID);
+        if(studentID != null && !studentID.isEmpty()){
+            if(mapStudents.containsStudentIDNum(studentID)){
+                return mapStudents.getStudentByIDNum(studentID);
+            }
         }
-
         return null;
     }
 
     public Student searchStudentByEmail(String studentEmail){
-        if(mapStudents.containsStudentEmail(studentEmail)){
-            return mapStudents.getStudentByEmail(studentEmail);
+        if(studentEmail != null && !studentEmail.isEmpty()){
+            if(mapStudents.containsStudentEmail(studentEmail)){
+                return mapStudents.getStudentByEmail(studentEmail);
+            }
         }
-
         return null;
     }
 
     public Event searchEventByName(String eventName){
-
-        for (int i = 0; i < arrEvents.size(); i++){
-            if(arrEvents.get(i).getName().equals(eventName)){
-                return arrEvents.get(i);
+        if(eventName != null && !eventName.isEmpty()){
+            for (int i = 0; i < arrEvents.size(); i++){
+                if(arrEvents.get(i).getName().equals(eventName)){
+                    return arrEvents.get(i);
+                }
             }
         }
         return null;
     }
 
     public Event searchEventByDate(String eventDate){
-        for (int i = 0; i < arrEvents.size(); i++){
-            if(arrEvents.get(i).getDate().equals(eventDate)){
-                return arrEvents.get(i);
+        if(eventDate != null && !eventDate.isEmpty()){
+            for (int i = 0; i < arrEvents.size(); i++){
+                if(arrEvents.get(i).getDate().equals(eventDate)){
+                    return arrEvents.get(i);
+                }
             }
         }
         return null;
@@ -184,6 +201,8 @@ public class SkeletonCode {
     }
 
     public boolean writeToFile(StudentList sl) throws IOException {
+
+
         csvDatabase.delete();
         csvDatabase.createNewFile();
         mapStudents = sl;
