@@ -10,10 +10,12 @@ public class SkeletonCode {
     private Scanner filescanner;
     private StudentList mapStudents;
     private ArrayList<Event> arrEvents;
+    private boolean doOverride;
 
     public SkeletonCode(){
         mapStudents = new StudentList();
         arrEvents = new ArrayList<>();
+        doOverride = false;
     }
 
     public boolean openFile(File file) {
@@ -124,8 +126,6 @@ public class SkeletonCode {
             }
         }
 
-
-
         return isFileGood;
     }
 
@@ -182,18 +182,16 @@ public class SkeletonCode {
     public StudentList readFile(){
         // it would read from this.csvDatabase and return a new StudentList with the data
 
-
         return mapStudents;
     }
 
-    public boolean createFile(String name, boolean doOverride) throws IOException {
+    public boolean createFile(String name) throws IOException {
         //declarations
         filePath = "C:/Temp/"+name;
         csvDatabase = new File("C:/Temp/"+name);
         boolean doFileCreated = false;
 
-        if(doOverride)
-            csvDatabase.delete();
+        csvDatabase.delete();
 
         doFileCreated = csvDatabase.createNewFile();
 
@@ -201,7 +199,8 @@ public class SkeletonCode {
     }
 
     public boolean writeToFile(StudentList sl) throws IOException {
-
+        if(sl == null || sl.getSize() == 0)
+            return false;
 
         csvDatabase.delete();
         csvDatabase.createNewFile();

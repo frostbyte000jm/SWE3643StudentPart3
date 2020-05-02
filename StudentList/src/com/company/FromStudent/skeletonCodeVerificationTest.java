@@ -20,13 +20,7 @@ public class skeletonCodeVerificationTest {
     private File file;
     private boolean fileOpenGood;
 
-    //DJM sorry. I had to change some stuff up here
-    public void createSkeletonCode(){
-        this.sc = new SkeletonCode();
-    }
-
     public void basicSetUp(String fn) throws Exception {
-        //createSkeletonCode();
         //Cleanup
         if(new File("C:\\Temp\\"+fn).exists())
             new File("C:\\Temp\\"+fn).delete();
@@ -38,9 +32,8 @@ public class skeletonCodeVerificationTest {
             Files.copy(source, dest);
         }
         else{
-            sc.createFile(fn,true);
+            sc.createFile(fn);
         }
-
 
         //Set Test file
         file = new File("C:\\Temp\\"+fn);
@@ -50,8 +43,7 @@ public class skeletonCodeVerificationTest {
 
     @Before
     public void setUp() throws Exception {
-       createSkeletonCode();
-        //this.sc = new SkeletonCode();
+        this.sc = new SkeletonCode();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

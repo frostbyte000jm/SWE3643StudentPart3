@@ -12,8 +12,6 @@ public class Student {
     private ArrayList<Event> arrEvents;
     private int eventCount;
 
-    public Student(){}
-
     public Student(String fn, String ln, String id, String email){
         this.firstName = fn;
         this.lastName = ln;
@@ -23,6 +21,15 @@ public class Student {
         arrEvents = new ArrayList<>();
     }
 
+    public void addEvent(Event event){
+        if(!arrEvents.contains(event)){
+            arrEvents.add(event);
+            eventCount++;
+        }
+    }
+
+
+    //get / set
     public String getFirstName() {
         return firstName;
     }
@@ -57,14 +64,6 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void addEvent(Event event){
-        if(!arrEvents.contains(event)){
-            arrEvents.add(event);
-            eventCount++;
-        }
-
     }
 
     public int getEventCount(){return eventCount;}

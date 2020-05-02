@@ -1,5 +1,6 @@
 package com.company.FromStudent;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -16,12 +17,12 @@ public class skeletonCodeFunctionalTest {
     private File file;
     private boolean fileOpenGood;
 
-    public void createSkeletonCode(){
+    @Before
+    public void setUp(){
         this.sc = new SkeletonCode();
     }
 
     public void basicSetUp(String fn) throws Exception {
-        createSkeletonCode();
         //Cleanup
         if(new File("C:\\Temp\\"+fn).exists())
             new File("C:\\Temp\\"+fn).delete();
@@ -130,11 +131,10 @@ public class skeletonCodeFunctionalTest {
 
     @Test
     public void createFile() throws IOException { //Unfortunately you never told me where to create the file.
-        createSkeletonCode();
 
         boolean expected = true;
 
-        boolean result = sc.createFile("newFile.pdf",true); // had to revise or test will fail on second running.
+        boolean result = sc.createFile("newFile.pdf"); // had to revise or test will fail on second running.
 
         // asserts a new file to write information to was created successfully
         assertEquals(expected, result);
@@ -142,8 +142,7 @@ public class skeletonCodeFunctionalTest {
 
     @Test
     public void writeToFile() throws IOException {
-        createSkeletonCode();
-        sc.createFile("writeTest.csv",true);
+        sc.createFile("writeTest.csv");
 
         StudentList sl = new StudentList();
         sl.addStudent(new Student("Sample", "Student", "000000000", "samplestudent@students.kennesaw.edu"));

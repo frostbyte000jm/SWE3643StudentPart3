@@ -29,4 +29,9 @@ public class Event {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public void DisplayEvent(){
+        System.out.println("Event: "+this.name+"\n" +
+                "Date: "+this.date+"\n");
+    }
 }
